@@ -1,0 +1,80 @@
+import * as React from 'react';
+import UniTable, { TableColumnConfig, ToolbarButtonDecorator } from '../../common/UniTable';
+import { <%= componentName %>State, apiActions } from '../../../models/system/<%= modelName %>';
+import { updatePane } from '../../../models/common/sidebar';
+import { injectApi, ApiComponentProps } from '../../../util/inject';
+
+export interface <%= componentName %>Props extends ApiComponentProps<<%= componentName %>State> {
+}
+
+class <%= componentName %> extends React.Component<<%= componentName %>Props, any> {
+  render() {
+    const { data, dispatch } = this.props;
+
+    const columns: TableColumnConfig<any>[] = [{
+      title: 'id',
+      dataIndex: 'id',
+    }, {
+      title: '角色名称',
+      dataIndex: 'roleName',
+    }, {
+      title: '创建时间',
+      dataIndex: 'createTime',
+    }, {
+      title: '操作',
+      dataIndex: 'actions',
+      render: (text, record, index) => {
+        return (
+          <div
+            className="action-container"
+          >
+            <a
+              onClick={() => {
+                updatePane(dispatch, {
+                  componentName: 'EditRole',
+                  backComponent: {
+                    componentName: '<%= componentName %>',
+                  },
+                }, {
+                  id: record.id,
+                  roleName: record.roleName,
+                });
+              }}
+            >
+              编辑
+            </a>
+          </div>
+        );
+      },
+    }];
+
+    const toolbarButtons: ToolbarButtonDecorator[] = [{
+      key: 'plus',
+      type: 'primary',
+      onClick: () => {
+        updatePane(dispatch, {
+          componentName: 'EditRole',
+          backComponent: {
+            componentName: '<%= componentName %>',
+          },
+        });
+      },
+      enableForAll: true,
+      text: '添加角色',
+    }];
+
+    return (
+      <UniTable
+        columns={columns}
+        apiAction={apiActions.get<%= componentName %>}
+        tableState={data}
+        toolbarButtons={toolbarButtons}
+        hasToolbar
+      />
+    );
+  }
+}
+
+export default injectApi(<%= componentName %>, {
+  data: '<%= modelName %>',
+});

@@ -1,0 +1,30 @@
+image: grunt-gulp-bower:latest
+stages:
+  - build
+
+development:
+  stage: build
+  script:
+    - cnpm install --no-cache
+    - npm run build
+    - cp server/* dist/ -r
+    - rsync --delete -ave "ssh -p 22" dist/* app@192.168.40.209:/home/app/qqmadmin-stream/
+  only:
+    - dev
+  artifacts:
+    paths:
+    - dist/
+
+production:
+  stage: build
+  script:
+    - cnpm install --no-cache
+    - npm run build
+    - cp server/* dist/ -r
+    - rsync --delete -ave "ssh -p 22" dist/* app@192.168.40.245:/home/app/qqmadmin-stream/
+    - ssh app@192.168.40.245 'cd qqmadmin-stream && npm install'
+  only:
+    - master
+  artifacts:
+    paths:
+    - dist/
