@@ -1,5 +1,3 @@
-# qqmadmin-stream
-
 ## 概念说明
 
 - 开发服务使用[dora](https://github.com/dora-js/dora)，dora是一个完整的开发服务，带有mock服务，方便本地调试
