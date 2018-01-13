@@ -33,7 +33,6 @@ class CardEx extends React.Component<CardExProps, any> {
   }
 
   render() {
-    const { app, loading } = this.props;
     let CardProps: any = {
       className: 'cardEx ' + this.props.className,
     };

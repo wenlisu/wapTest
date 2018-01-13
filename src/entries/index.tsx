@@ -14,7 +14,7 @@ sagaMiddleware.run(appSaga);
 const history = syncHistoryWithStore(browserHistory, store);
 let render = () => {
   persistStore(store, {
-    whitelist: ['theme', 'token'],
+    whitelist: ['login', 'token'],
   }, (err, restoredState) => {
     const Routes = require('../routes');
     ReactDOM.render(

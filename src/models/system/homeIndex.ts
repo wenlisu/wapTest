@@ -3,7 +3,7 @@ import { initApi, ApiConfig } from '../../util/api';
 import { handleActions } from 'redux-actions';
 import { ValueText } from '../../util/baseDecorator';
 
-let modelName = 'eidtUser';
+let modelName = 'homeIndex';
 
 // simple actions
 
@@ -56,7 +56,7 @@ export const sagas = api.sagas;
 
 // reducers
 
-export interface EditUserState {
+export interface HomeIndexState {
   loading: boolean;
   name: string;
   userName: string;
@@ -76,7 +76,7 @@ const initialState = {
   maUsername: undefined,
 };
 
-export const reducer = handleActions<EditUserState, any>({
+export const reducer = handleActions<HomeIndexState, any>({
   [apiActionNames.addUser.request](state, action) {
     return {
       ...state,

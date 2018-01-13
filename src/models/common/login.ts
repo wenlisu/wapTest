@@ -22,7 +22,6 @@ export const actions = simpleActions.actions;
 let apis = {
   login: 'login',
   logout: 'logout',
-  getOperatorInfo: 'getOperatorInfo',
 };
 
 let apiConfigs: ApiConfig[] = [{
@@ -30,10 +29,7 @@ let apiConfigs: ApiConfig[] = [{
   actionName: 'login',
 }, {
   path: '/system/logout',
-  actionName: apis.logout,
-}, {
-  path: '/system/getOperatorInfo',
-  actionName: apis.getOperatorInfo,
+  actionName: 'logout',
 }];
 
 const api = initApi<typeof apis>('', apiConfigs, modelName);
@@ -99,7 +95,7 @@ export const reducer = handleActions<LoginState, any>({
   },
   [apiActionNames.login.success](state, action) {
     // tslint:disable-next-line:no-unused-variable
-    let { operatorId, ...data } = action.payload.res.operatorInfo;
+    let { ...data } = action.payload.res.operatorInfo;
     return {
       ...state,
       loading: false,
@@ -135,30 +131,6 @@ export const reducer = handleActions<LoginState, any>({
   ['loginTimeout'](state, action) {
     return {
       ...state,
-      ...initialState,
-    };
-  },
-  [apiActionNames.getOperatorInfo.request](state, action) {
-    return {
-      ...state,
-      loading: true,
-    };
-  },
-  [apiActionNames.getOperatorInfo.success](state, action) {
-    // tslint:disable-next-line:no-unused-variable
-    let { operatorId, ...data } = action.payload.res.operatorInfo;
-    return {
-      ...state,
-      loading: false,
-      ...data,
-      getOperatorInfoError: false,
-    };
-  },
-  [apiActionNames.getOperatorInfo.error](state, action) {
-    return {
-      ...state,
-      loading: false,
-      getOperatorInfoError: true,
       ...initialState,
     };
   },

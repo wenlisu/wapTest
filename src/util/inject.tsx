@@ -5,6 +5,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { TokenState } from '../models/common/token';
+import { LoginState } from '../models/common/login';
 export interface NormalComponentProps {
   dispatch: any;
 }
@@ -27,14 +28,16 @@ export function injectNormal<OwnProps = any>(MyComponent, propState: PropStates)
 
 export interface ApiComponentProps<T = any> extends NormalComponentProps {
   token: TokenState;
+  login: LoginState;
   data: T;
 }
 interface PropStates {
   [key: string]: string;
 }
-export function injectApi<OwnProps = any>(MyComponent, propState: PropStates) {
+export function injectApi<OwnProps = any>(MyComponent, propState?: PropStates) {
   return injectNormal<any>(MyComponent, {
     ...propState,
     token: 'token',
+    login: 'login',
   }) as React.ComponentClass<OwnProps>;
 }

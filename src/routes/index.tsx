@@ -8,6 +8,8 @@ import App from '../containers/common/App';
 import NotFound from '../components/common/NotFound';
 
 // routes
+import Login from '../containers/system/Login';
+
 import HomeIndex from '../containers/system/HomeIndex';
 import Bill from '../containers/system/Bill';
 import Mine from '../containers/system/Mine';
@@ -47,7 +49,8 @@ class Routes extends React.Component<RoutesProps, any> {
 
     return (
       <Router history={history} >
-        <Route path="/" component={App} >
+        <Route path="/login" component={Login} onEnter={this.checkLogined} />
+        <Route path="/" component={App} onEnter={this.checkLogin}>
           <IndexRedirect to="homeIndex" />
           <Route path="/homeIndex" component={HomeIndex} />
           <Route path="/bill" component={Bill} />

@@ -1,9 +1,8 @@
 import { initAction } from '../../util/action';
 import { initApi, ApiConfig } from '../../util/api';
 import { handleActions } from 'redux-actions';
-import { makeListHandleActions, ListState } from '../../util/listReducers';
 
-let modelName = 'userList';
+let modelName = 'bill';
 
 // simple actions
 
@@ -19,17 +18,13 @@ export const actions = simpleActions.actions;
 // apis
 
 let apis = {
-  getUserList: 'getUserList',
-  resetPassword: 'resetPassword',
+  editPassword: 'editPassword',
 };
 
 let apiConfigs: ApiConfig[] = [{
-  path: '/user/getUserList',
-  actionName: apis.getUserList,
-}, {
-  path: '/user/resetPassword',
-  actionName: apis.resetPassword,
-  message: '重置密码成功',
+  path: '/user/editPassword',
+  actionName: apis.editPassword,
+  message: '修改密码成功',
 }];
 
 const api = initApi<typeof apis>('/api', apiConfigs, modelName);
@@ -40,32 +35,29 @@ export const sagas = api.sagas;
 
 // reducers
 
-export interface UserListState extends ListState<any> {
-
+export interface BillState {
+  loading: boolean;
 }
 
-const listHandle = makeListHandleActions(apiActionNames[apis.getUserList]);
-
-export const reducer = handleActions<UserListState, any>({
-  ...listHandle.handleActions,
-  [apiActionNames.resetPassword.request](state, action) {
+export const reducer = handleActions<BillState, any>({
+  [apiActionNames.editPassword.request](state, action) {
     return {
       ...state,
       loading: true,
     };
   },
-  [apiActionNames.resetPassword.success](state, action) {
+  [apiActionNames.editPassword.success](state, action) {
     return {
       ...state,
       loading: false,
     };
   },
-  [apiActionNames.resetPassword.error](state, action) {
+  [apiActionNames.editPassword.error](state, action) {
     return {
       ...state,
       loading: false,
     };
   },
 }, {
-    ...listHandle.initializeState,
-  });
+  loading: false,
+});
