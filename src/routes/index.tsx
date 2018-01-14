@@ -8,11 +8,11 @@ import App from '../containers/common/App';
 import NotFound from '../components/common/NotFound';
 
 // routes
-import Login from '../containers/system/Login';
+import Login from '../containers/page/Login';
 
-import HomeIndex from '../containers/system/HomeIndex';
-import Bill from '../containers/system/Bill';
-import Mine from '../containers/system/Mine';
+import HomeIndex from '../containers/page/HomeIndex';
+import Bill from '../containers/page/Bill';
+import Mine from '../containers/page/Mine';
 
 interface RoutesProps {
   token: TokenState;
