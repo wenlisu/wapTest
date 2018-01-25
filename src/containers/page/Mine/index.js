@@ -11,7 +11,6 @@ const prefixCls = `${BASE_PREFIX}-mine`;
 class Mine extends React.Component {
   logout = () => {
     const { dispatch, token, data } = this.props;
-    console.log('apiActions',apiActions);
     dispatch(apiActions.logout(token));
   }
   render() {

@@ -30,25 +30,7 @@ function jsonParse(res) {
     };
   } else {
     let contentType = res.headers.get('content-type');
-    if (contentType && (contentType.indexOf('application/zip') >= 0 || contentType.indexOf('excel') >= 0)) {
-      res.blob().then(blob => {
-        let a: any = document.createElement('a');
-        let url = window.URL.createObjectURL(blob);
-        let filename = '导出数据.zip';
-        if (contentType.indexOf('excel') >= 0) {
-          filename = '导出数据.xls';
-        }
-        a.href = url;
-        a.download = filename;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      });
-      return {
-        status: 0,
-      };
-    } else {
       return res.json().then(jsonResult => jsonResult);
-    }
   }
 }
 
